@@ -29,7 +29,7 @@ user_history = {
     "user_B": [0.1, 0.8, 0.2]  # Prefers fashion items
 }
 
-@get("/api/recommend/{user_id}")
+@app.get("/api/recommend/{user_id}")
 def generate_recommendations(user_id: str):
     # Fallback profiling vector if user doesn't exist
     user_vector = np.array(user_history.get(user_id, [0.5, 0.5, 0.5])).reshape(1, -1)

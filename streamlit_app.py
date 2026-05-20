@@ -16,7 +16,7 @@ if st.button("Generate Recommendations", type="primary"):
     with st.spinner("🧠 Querying AI Recommendation Service..."):
         try:
             # Connect directly to your running FastAPI service
-            response = requests.get(f"http://localhost:8000/api/recommend/{user_id}")
+            response = requests.get(f"https://ai-recommendation-service-xxxx.onrender.com/api/recommend/{user_id}")
             if response.status_code == 200:
                 data = response.json()
                 
