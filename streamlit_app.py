@@ -15,9 +15,14 @@ BACKEND_URL = "https://ai-recommendation-service-d86l.onrender.com"
 if st.button("Generate Recommendations", type="primary"):
     with st.spinner("🧠 Querying AI Recommendation Service on Render..."):
         try:
-            # This structures the full path to https://ai-recommendation-service-d86l.onrender.com/api/recommend/123
+            # Attempt 1: Standard routing path
             endpoint = f"{BACKEND_URL}/api/recommend/{user_id}"
-            response = requests.get(endpoint, timeout=15)
+            response = requests.get(endpoint, timeout=12)
+            
+            # Attempt 2: Fallback path if Attempt 1 returns a 404
+            if response.status_code == 404:
+                endpoint = f"{BACKEND_URL}/recommend/{user_id}"
+                response = requests.get(endpoint, timeout=12)
             
             if response.status_code == 200:
                 data = response.json()

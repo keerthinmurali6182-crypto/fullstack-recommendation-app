@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Production AI Recommendation Engine")
 
-# Enable CORS so your live Streamlit website can securely pull data
+# Configure CORS so your Streamlit site isn't blocked by the browser
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -12,17 +12,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Root route to test if the backend server is live
+# Route 1: Root status check
 @app.get("/")
 async def read_root():
     return {"status": "online", "message": "FastAPI AI Engine is running perfectly!"}
 
-# The explicit route matching your Streamlit request
+# Route 2: Primary route matching your exact Streamlit URL path
 @app.get("/api/recommend/{user_id}")
-async def get_recommendations(user_id: str):
+async def get_recommend_v1(user_id: str):
     return {
         "user_id": user_id,
         "status": "SUCCESS",
+        "recommendations": [
+            {"title": "Inception", "type": "Movie"},
+            {"title": "Designing Data-Intensive Applications", "type": "Book"}
+        ]
+    }
+
+# Route 3: Fallback route in case the router strips the '/api' prefix
+@app.get("/recommend/{user_id}")
+async def get_recommend_v2(user_id: str):
+    return {
+        "user_id": user_id,
+        "status": "SUCCESS_FALLBACK",
         "recommendations": [
             {"title": "Inception", "type": "Movie"},
             {"title": "Designing Data-Intensive Applications", "type": "Book"}
