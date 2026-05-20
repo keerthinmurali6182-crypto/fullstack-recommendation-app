@@ -1,0 +1,11 @@
+{
+  "name": "node-backend-gateway",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.1"
+  }
+}
